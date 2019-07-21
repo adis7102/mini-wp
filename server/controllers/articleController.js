@@ -65,7 +65,8 @@ class ArticleController {
         console.log(req.params.id)
         const newData = {
             title : req.body.title,
-            content : req.body.content
+            content : req.body.content,
+            image : req.body.image
         }
         Article.updateOne({ _id : req.params.id }, newData)
         .then(result => {

@@ -4,8 +4,14 @@ var Schema = mongoose.Schema;
 
 /* Generate Model */
 let ArticleSchema = new Schema({
-    title : String,
-    content : String,
+    title : {
+        type : String,
+        required : [true, 'title required!']
+    },
+    content : {
+        type : String,
+        required : [true, 'title required!']
+    },
     image : String,
     UserId : {type : Schema.Types.ObjectId, ref : 'User'}
     // someManyFkData : [{type : Schema.Types.ObjectId, ref : 'Member'}]

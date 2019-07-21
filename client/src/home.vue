@@ -32,10 +32,10 @@
           <allArticle v-if="body == 'feeds'" :allArticle="data" @changeBody="toDetailPage" ></allArticle>
         </div>
         <div v-for="(article, i) in dataMyArticle" :key="`a-${i}`._id">
-          <myArticle v-if="body == 'myArticle'" :myArticle="article" @updateArticle="changeBody"></myArticle>
+          <myArticle v-if="body == 'myArticle'" :myArticle="article" @updateArticle="changeBody" @refetchMyArt="fetchMyArticle" @refetchAll="fetchAllArticle"></myArticle>
         </div>
         <div v-if="body == 'create'">
-          <create @articleCreated="fetchAllArticle"></create>
+          <create @articleCreated="fetchAllArticle" @refetchMyArticle="fetchMyArticle"></create>
         </div>
         <div v-if="body == 'update'">
           <update :getIdArticle="articleId"></update>

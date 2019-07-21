@@ -13,8 +13,8 @@
           style="float : right; margin-top: 100px;"
         >DELETE</b-button>
         <b-button
-          @click="toUpdate(myArticle._id)"
-          variant="success"
+          @click="toUpdate(myArticle._id)" @refetchFeeds="refetchAllArticle" @refetchMyArt="refetchMyArticle"
+           variant="success"
           style="float : right; margin-top: 100px;"
         >UPDATE</b-button>
       </b-card>
@@ -46,7 +46,12 @@ export default {
     toUpdate(id) {
       this.$emit('updateArticle', 'update',id)
     },
-    reFetch() {
+    refetchAllArticle(){
+      this.$emit('refetchAll')
+    },
+    refetchMyArticle() {
+      console.log('asdad')
+      this.$emit('refetchMyArt')
     },
     deleteArticle(id) {
       Swal.fire({
@@ -66,8 +71,9 @@ export default {
           })
             .then(({ data }) => {
               console.log(data);
+              this.refetchAllArticle()
+              this.refetchMyArticle()
               Swal.fire("Deleted!", "Your article has been deleted.", "success");
-              this.reFetch();
             })
             .catch(err => {
               console.log(err);

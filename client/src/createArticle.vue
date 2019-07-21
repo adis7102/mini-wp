@@ -13,9 +13,12 @@
     ></tinymce-editor>
 
     <b-form-file v-model="newPost.image" class="mt-3" plain @change="onFilePicked"></b-form-file>
-    <img :src="imageUrl" v-show="imageUrl">
-    <div class="mt-3">Selected file: {{ newPost.image ? newPost.image.name : '' }}</div> 
-    <b-button @click="createArticle" variant="outline-info" style="float: left;">Submit</b-button>   
+    <img :src="imageUrl" v-show="imageUrl" />
+    <div class="mt-3">
+      <b-spinner v-if="statusLoad" variant="primary" label="Spinning"></b-spinner>
+      Selected file: {{ newPost.image ? newPost.image.name : '' }}
+    </div>
+    <b-button @click="createArticle" variant="outline-info" style="float: left;">Submit</b-button>
   </div>
 </template>
 
@@ -31,6 +34,7 @@ export default {
         title : '',
         content : '',
       },
+      statusLoad : false,
       image : '',
       imageUrl: "",
       imageFile: "",
@@ -43,7 +47,10 @@ export default {
   },
   methods: {
     toCreate() {
-      this.$emit('articleCreated');
+      this.$emit('articleCreated');     
+    },
+    refecthMyArt() {
+       this.$emit('refetchMyArticle')
     },
     createArticle() {
       let newArticle = {
@@ -68,7 +75,11 @@ export default {
           })
           this.newPost.title = ''
           this.newPost.content = ''
+          this.image ='',
+          this.imageUrl="",
+          this.imageFile="",
           this.toCreate()
+          this.refecthMyArt()
         })
         .catch(err => {
           console.log("kena error di create article");
@@ -76,7 +87,8 @@ export default {
         });
     },
     onFilePicked (e) {
-      this.loading = true
+      this.statusLoad = true      
+      this.loading = true      
       this.imageUrl = ""
       const files = e.target.files
       if(files[0] !== undefined) {
@@ -100,6 +112,7 @@ export default {
                   })
                     .then(({ data }) =>{
                       this.loading = false
+                      this.statusLoad = false
                       this.imageUrl = fr.result
                       this.image = data
                       })

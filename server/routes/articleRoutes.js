@@ -8,7 +8,7 @@ router.get('/', articleController.findAll)
 router.use(authentication)
 router.post('/', articleController.create)
 router.get('/:id', articleController.findOne)
-router.get('/getAll/myarticle', articleController.findMyArticles)
+router.get('/getAll/myarticle', authorization, articleController.findMyArticles)
 router.delete('/:id', authorization, articleController.delete)
 router.patch('/:id', authorization, articleController.update)
 

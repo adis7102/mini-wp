@@ -11,17 +11,17 @@
           <form>
             <div class="form-group">
               <label>Your email</label>
-              <input v-model="user.email" name class="form-control" placeholder="Email" type="email" />
+              <input v-model="user.email" name class="form-control" placeholder="Email" type="email"/>
             </div>
             <!-- form-group// -->
             <div class="form-group">             
               <label>Your password</label>
-              <input v-model="user.password" class="form-control" placeholder="******" type="password" />
+              <input v-model="user.password" class="form-control" placeholder="******" type="password"/>
             </div>
             <!-- form-group// -->
             <div class="form-group">
               <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-              <b-button variant="secondary" @click="googleSignIn">Google Sign in</b-button>              
+              <b-button variant="secondary" @click="googleSignIn"><i class="fab fa-google"></i> Sign in With Google</b-button>              
             </div>
             <!-- form-group// -->
             <div class="form-group">
@@ -145,55 +145,77 @@ export default {
       this.body = val
     },
     register() {
-      ax({
-        method: "post",
-        url : `/users/register`,
-        data : this.newUser
-      })
-      .then(({data}) => {
-        console.log(data, `Sucesssssss`)
-        this.user.email = data.email,
-        this.user.password = this.newUser.password
-        this.newUser.name = ''
-        this.newUser.email = ''
-        this.newUser.password = ''
-        this.login()
-      })
-      .catch(err => {
-        console.log('kena error register')
-        console.log(err, 'error register')
-      })
+      if(!this.newUser.name || !this.newUser.email || !this.newUser.password){
+        Swal.fire({
+          type: 'error',
+          title: 'input field can\'t be blank!',
+          footer: '<a href>Why do I have this issue?</a>'
+        })
+      }
+      else {
+        ax({
+          method: "post",
+          url : `/users/register`,
+          data : this.newUser
+        })
+        .then(({data}) => {
+          console.log(data, `Sucesssssss`)
+          this.user.email = data.email,
+          this.user.password = this.newUser.password
+          this.newUser.name = ''
+          this.newUser.email = ''
+          this.newUser.password = ''
+          this.login()
+        })
+        .catch(err => {
+          Swal.fire({
+          type: 'error',
+          title: 'email / password can\'t be blank',
+          footer: '<a href>Why do I have this issue?</a>'
+          })
+          console.log('kena error register')
+          console.log(err, 'error register')
+        })
+      }
     },
     login(){
-      ax({
-        method : `post`,
-        url : `users/login`,
-        data : this.user
-      })
-      .then(({data}) => {
-        console.log('berhasil login euuy')
-        this.user.email = ''
-        this.user.password = ''
-        localStorage.setItem('name', data.name)
-        localStorage.setItem('token', data.token)
-        this.toHome()
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 3000
-        });
-        Toast.fire({
-          type: 'success',
-          title: 'Signed in successfully'
+      if(!this.user.email || !this.user.password){
+        Swal.fire({
+          type: 'error',
+          title: 'email / password can\'t be blank',
+          footer: '<a href>Why do I have this issue?</a>'
         })
-        
-      })
-      .catch(err => {
-        console.log('kena error login')
-        console.log(err, 'error login')
-        
-      })
+      }
+      else {
+        ax({
+          method : `post`,
+          url : `users/login`,
+          data : this.user
+        })
+        .then(({data}) => {
+          console.log('berhasil login euuy')
+          this.user.email = ''
+          this.user.password = ''
+          localStorage.setItem('name', data.name)
+          localStorage.setItem('token', data.token)
+          this.toHome()
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+          });
+          Toast.fire({
+            type: 'success',
+            title: 'Signed in successfully'
+          })
+          
+        })
+        .catch(err => {
+          console.log('kena error login')
+          console.log(err, 'error login')          
+        })
+      }
     },
     googleSignIn(){      
       this.$gAuth.signIn()

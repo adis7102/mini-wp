@@ -2,7 +2,7 @@
   <div>
     <b-card>
       <b-media>
-        <b-img :src="dataArticle.image" width="200" alt="placeholder"></b-img>
+        <b-img class="mx-auto" style="width: 200px;" :src="dataArticle.image" width="200" alt="placeholder"></b-img>
         <h5 class="mt-0">{{ dataArticle.title }}</h5>
         <p v-html="dataArticle.content">{{ dataArticle.content }}</p>        
       </b-media>
