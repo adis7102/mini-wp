@@ -71,7 +71,7 @@ export default {
       this.$emit('reUpload')
     },
     refetchFeeds(){
-      console.log('masuk fetch')
+      console.log('masuk')
       this.$emit('refetchFeeds')
     },
     refetchMyArticle(){
