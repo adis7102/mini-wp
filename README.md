@@ -13,10 +13,10 @@ baseUrl = http:localhost:3000
 #### Article Routes ({ headers: { token } })
 | `Routes`| `Method` | `Request Body` | `Response Data`| `Response Error` | `Description` |
 |---------|----------|----------------|----------------|------------------|---------------|
-| / | GET | - | { data }| <br> 500 (Internal Server Error) |  Get all article
-| / | POST | {title, content, image} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Article|
-| /:id | GET | - | {data} | 401(Invalid Token) <br> 401(you have to login first!) <br> | Get article by params id |
-| /getAll/myArticle | GET | - | {data} | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 401 (Unauthorized) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Get all article that belongs to user |
-| /:id | DELETE | - | { completed } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Delete your Article |
-| /:id| PATCH | - | { success } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Edit Article data |
-| /upload | POST | - | ${ success message }| 401 (Invalid Token)<br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Upload image to Google Cloud Storage |
+| /articles | GET | - | { data }| <br> 500 (Internal Server Error) |  Get all article
+| /articles | POST | {title, content, image} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Article|
+| /articles/:id | GET | - | {data} | 401(Invalid Token) <br> 401(you have to login first!) <br> | Get article by params id |
+| /articles/getAll/myArticle | GET | - | {data} | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 401 (Unauthorized) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Get all article that belongs to user |
+| /articles/:id | DELETE | - | { completed } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Delete your Article |
+| /articles/:id| PATCH | - | { success } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Edit Article data |
+| /articles/upload | POST | - | ${ success message }| 401 (Invalid Token)<br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Upload image to Google Cloud Storage |
