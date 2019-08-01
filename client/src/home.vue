@@ -32,13 +32,13 @@
           <allArticle v-if="body == 'feeds'" :allArticle="data" @changeBody="toDetailPage" ></allArticle>
         </div>
         <div v-for="(article, i) in dataMyArticle" :key="`a-${i}`._id">
-          <myArticle v-if="body == 'myArticle'" :myArticle="article" @updateArticle="changeBody" @refetchMyArt="fetchMyArticle" @refetchAll="fetchAllArticle"></myArticle>
+          <myArticle v-if="body == 'myArticle'" :myArticle="article" @updateArticle="changeBody" @refetchMyArt="fetchMyArticle" @refetch-all="fetchAllArticle"></myArticle>
         </div>
         <div v-if="body == 'create'">
-          <create @articleCreated="fetchAllArticle" @refetchMyArticle="fetchMyArticle"></create>
+          <create @feeds="changeBody" @articleCreated="fetchAllArticle" @refetchMyArticle="fetchMyArticle"></create>
         </div>
         <div v-if="body == 'update'">
-          <update :getIdArticle="articleId"></update>
+          <update :getIdArticle="articleId" @refetch-feeds="fetchAllArticle" @refetch-my-article="fetchMyArticle"></update>
         </div>
         <div v-if="body == 'detail'">
           <detail :detail="articleId"></detail>
@@ -114,7 +114,7 @@ export default {
       });
     },
     fetchAllArticle() {
-      console.log("masuk fetch");
+      console.log("masuk fetchAllArticle");
       ax({
         method: "get",
         url: "/articles",

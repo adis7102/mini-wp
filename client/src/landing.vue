@@ -1,12 +1,11 @@
 <template>
   <div id="landing" v-if="page === 'landing'">
-    <img id="image" src="https://wallpapercave.com/wp/LWEuptq.jpg" alt="asdad">
     <div id="title"><h1>Welcome to MiniWordPress</h1></div>
 
     <div id="card-container">      
       <div id="inside-card" class="card">
         <article class="card-body">
-          <b-button v-b-modal.modal-register variant="outline-primary" style="float: right;">Register</b-button>
+          <b-button v-b-modal.modal-register style="float: right; background-color : #FBC02D;">Register</b-button>
           <h4 class="card-title mb-4 mt-1">Sign in</h4>
           <form>
             <div class="form-group">
@@ -148,8 +147,7 @@ export default {
       if(!this.newUser.name || !this.newUser.email || !this.newUser.password){
         Swal.fire({
           type: 'error',
-          title: 'input field can\'t be blank!',
-          footer: '<a href>Why do I have this issue?</a>'
+          title: 'input field can\'t be blank!'
         })
       }
       else {
@@ -168,11 +166,35 @@ export default {
           this.login()
         })
         .catch(err => {
-          Swal.fire({
-          type: 'error',
-          title: 'email / password can\'t be blank',
-          footer: '<a href>Why do I have this issue?</a>'
-          })
+          console.log(err.message)
+          if(err.response.data.message.includes('blank')){
+            Swal.fire({
+            type: 'error',
+            title: 'email / password can\'t be blank',
+            })
+          }
+          else if (err.response.data.message.includes("email format wrong")) {
+            Swal.fire({
+            type: 'error',
+            title: 'email format wrong!',
+            })
+          }
+          else if(err.response.data.message.includes('registered')) {
+            Swal.fire({
+            type: 'error',
+            title: 'email has been registered!',
+            })
+          }
+          else if (
+              err.response.data.message.includes(
+                "password length must be more than 6 characters!"
+              )
+            ) {
+              Swal.fire({
+            type: 'error',
+            title: 'password length must be more than 6 characters!',
+            })
+            }
           console.log('kena error register')
           console.log(err, 'error register')
         })
@@ -182,8 +204,7 @@ export default {
       if(!this.user.email || !this.user.password){
         Swal.fire({
           type: 'error',
-          title: 'email / password can\'t be blank',
-          footer: '<a href>Why do I have this issue?</a>'
+          title: 'email / password can\'t be blank'
         })
       }
       else {
@@ -212,6 +233,12 @@ export default {
           
         })
         .catch(err => {
+          if(err.response.data.message.includes('email/password invalid')){
+            Swal.fire({
+              type: 'error',
+              title: 'email/password wrong!',
+            })
+          }
           console.log('kena error login')
           console.log(err, 'error login')          
         })
@@ -272,12 +299,9 @@ export default {
 *{
   box-sizing: border-box;
 }
-#image {
-  width: 100%;
-  height: auto;
-  position: fixed;
-  z-index: 1;
-  filter: brightness(0.72) blur(1px);
+#landing{
+  height: 100vh;
+  background-image: linear-gradient(to right top, #3192dc, #3c8bd5, #4584cd, #4c7ec6, #5177be, #4475b8, #3773b1, #2970aa, #00709f, #006f91, #006c82, #026973);
 }
 /* #card-container {
   background-image: url("http://eskipaper.com/images/blue-landscape-1.jpg");

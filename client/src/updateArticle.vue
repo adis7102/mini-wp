@@ -72,11 +72,11 @@ export default {
     },
     refetchFeeds(){
       console.log('masuk')
-      this.$emit('refetchFeeds')
+      this.$emit('refetch-feeds')
     },
     refetchMyArticle(){
       console.log('masuk fetch')
-      this.$emit('refetchMyArt')
+      this.$emit('refetch-my-art')
     },
     updateArticle() {
       Swal.fire({

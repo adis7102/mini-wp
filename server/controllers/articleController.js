@@ -6,7 +6,8 @@ class ArticleController {
         // console.log(req.decoded.id)
         // console.log('masuk controller findAll')
         // console.log(req.decoded.id)    
-        Article.find(/* { UserId : req.decoded.id } */)
+        Article.find(/* { UserId : req.decoded.id } */).sort({ 'createdAt' : 'desc' })
+        .populate('UserId')
         .then(data => {
             console.log(data)
             res.status(200).json(data)
@@ -23,9 +24,7 @@ class ArticleController {
     }
 
     static findMyArticles(req, res, next){
-        console.log('hahahahahahahahahahahahahahahahahahahahaha')
-        console.log(req.decoded.id)
-        Article.find({UserId : req.decoded.id})
+        Article.find({UserId : req.decoded.id}).sort({ 'createdAt' : 'desc' })
         .then(data => {
             console.log(data)
             res.status(200).json(data)

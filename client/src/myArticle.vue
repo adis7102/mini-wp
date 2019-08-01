@@ -5,7 +5,7 @@
           <h5>{{ myArticle.title }}</h5>
         </b-card-text>
         <b-card-text>
-          <h5>{{ myArticle.createdAt }}</h5>
+          <h5>Posted At : {{ postedAt }}</h5>
         </b-card-text>
         <b-button
           @click="deleteArticle(myArticle._id)"
@@ -13,7 +13,7 @@
           style="float : right; margin-top: 100px;"
         >DELETE</b-button>
         <b-button
-          @click="toUpdate(myArticle._id)" @refetchFeeds="refetchAllArticle" @refetchMyArt="refetchMyArticle"
+          @click="toUpdate(myArticle._id)" @refetch-feeds="refetchAllArticle" @refetchMyArt="refetchMyArticle"
            variant="success"
           style="float : right; margin-top: 100px;"
         >UPDATE</b-button>
@@ -24,6 +24,7 @@
 <script>
 import ax from "./api/api.js";
 import update from "./updateArticle";
+import moment from 'moment'
 export default {
   name: "myArticle",
   components: {
@@ -34,6 +35,7 @@ export default {
     return {
       dataMyArticle: [],
       date: "",
+      postedAt : moment(this.myArticle.createdAt).format('MMMM Do YYYY')
     //   prevVal: {
     //     id : this.myArticle._id,
     //     inputUpdateTitle: this.myArticle.title,
@@ -47,7 +49,7 @@ export default {
       this.$emit('updateArticle', 'update',id)
     },
     refetchAllArticle(){
-      this.$emit('refetchAll')
+      this.$emit('refetch-all')
     },
     refetchMyArticle() {
       console.log('asdad')

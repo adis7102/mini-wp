@@ -18,7 +18,7 @@
       <b-spinner v-if="statusLoad" variant="primary" label="Spinning"></b-spinner>
       Selected file: {{ newPost.image ? newPost.image.name : '' }}
     </div>
-    <b-button @click="createArticle" variant="outline-info" style="float: left;">Submit</b-button>
+    <b-button @click="createArticle" :disabled="disableButton" variant="info" style="float: left; background-color : #F9A825;">Submit</b-button>
   </div>
 </template>
 
@@ -33,7 +33,9 @@ export default {
       newPost : {
         title : '',
         content : '',
+        image : ''
       },
+      disableButton : false,
       statusLoad : false,
       image : '',
       imageUrl: "",
@@ -49,8 +51,14 @@ export default {
     toCreate() {
       this.$emit('articleCreated');     
     },
+    toFeeds(){
+      this.$emit('feeds', 'feeds')
+    },
     refecthMyArt() {
        this.$emit('refetchMyArticle')
+    },
+    disable(val){
+      this.disableButton = val
     },
     createArticle() {
       let newArticle = {
@@ -80,16 +88,18 @@ export default {
           this.imageFile="",
           this.toCreate()
           this.refecthMyArt()
+          this.toFeeds()
         })
         .catch(err => {
           console.log("kena error di create article");
           console.log(err.response);
         });
     },
-    onFilePicked (e) {
+     onFilePicked (e) {
       this.statusLoad = true      
       this.loading = true      
       this.imageUrl = ""
+      this.disable(true)
       const files = e.target.files
       if(files[0] !== undefined) {
           this.imageName = files[0].name
@@ -112,9 +122,10 @@ export default {
                   })
                     .then(({ data }) =>{
                       this.loading = false
-                      this.statusLoad = false
+                      this.statusLoad = false                      
                       this.imageUrl = fr.result
                       this.image = data
+                      this.disable(false)
                       })
                     .catch(err =>{
                       console.log(err.response)
