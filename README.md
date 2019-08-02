@@ -4,11 +4,11 @@
 baseUrl = http:localhost:3000
 ### Not requires a Token : 
 #### User Routes
-| `Routes`| `Method` | `Request Body` | `Response Data`| `Response Error` | `Description` |
-|---------|----------|----------------|----------------|------------------|---------------|
-| /users/register| POST | { name, email, password } | { access_token } | 400(email has been registered!) <br>400(email format is wrong!)<br> 400(email required!)<br> 400(password length more than 6 characters!)<br> 400(password required!)|Register a new user|
-| /users/login | POST | { email, password }| { name, access_token }| 400(email/password wrong!) |Log in|
-| /users/loginGoogle | POST | { id_token } | { name, access_token } | |Sign in with Google|
+| `Routes`           | `Method` | `Request Body`            | `Response Data`        | `Response Error`                                                                                                                                                      | `Description`       |
+|--------------------|----------|---------------------------|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------|
+| /users/register    | POST     | { name, email, password } | { access_token }       | 400(email has been registered!) <br>400(email format is wrong!)<br> 400(email required!)<br> 400(password length more than 6 characters!)<br> 400(password required!) | Register a new user |
+| /users/login       | POST     | { email, password }       | { name, access_token } | 400(email/password wrong!)                                                                                                                                            | Log in              |
+| /users/loginGoogle | POST     | { id_token }              | { name, access_token } |                                                                                                                                                                       | Sign in with Google |
 ### Requires a Token :
 #### Article Routes ({ headers: { token } })
 | `Routes`| `Method` | `Request Body` | `Response Data`| `Response Error` | `Description` |
